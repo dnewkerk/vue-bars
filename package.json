@@ -1,7 +1,7 @@
 {
   "name": "@dnewkerk/vue-bars",
   "productionName": "Vue Bars",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple, elegant spark bars for Vue 3",
   "type": "module",
   "files": [

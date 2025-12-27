@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, getCurrentInstance } from 'vue'
 import VuePath from './VuePath'
 
 export default defineComponent({
@@ -68,7 +68,7 @@ export default defineComponent({
     }
   },
 
-  render () {
+  render() {
     if (!this.data || this.data.length < 2) return
     const { width, height, padding } = this
     const viewWidth = width || 300
@@ -91,8 +91,9 @@ export default defineComponent({
       labelSize: this.labelSize
     }
 
+    const instance = getCurrentInstance()
     const props = Object.assign({
-      id: 'vue-bars-' + this._uid,
+      id: 'vue-bars-' + instance.uid,
       boundary,
       labelProps,
     }, this.$props)
