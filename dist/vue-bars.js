@@ -1,20 +1,20 @@
-import { defineComponent as v, h as y } from "vue";
+import { defineComponent as v, h as y, getCurrentInstance as D } from "vue";
 function $(t, a, e) {
   e = e + 1;
   const r = parseInt(t, 16), o = parseInt(a, 16), n = [], i = (r - o) / e;
   n.push(t);
-  for (let c = 1; c <= e; c++)
-    n.push(Math.floor(r - i * c).toString(16));
+  for (let s = 1; s <= e; s++)
+    n.push(Math.floor(r - i * s).toString(16));
   return n;
 }
 function z(t, a, e) {
   e = e || 3;
-  const r = t.slice(0, 2), o = t.slice(2, 4), n = t.slice(4, 6), l = a.slice(0, 2), i = a.slice(2, 4), c = a.slice(4, 6), s = $(r, l, e), d = $(o, i, e), b = $(n, c, e), u = [];
-  return s.forEach(function(g, p) {
-    u.push("" + s[p] + d[p] + b[p]);
+  const r = t.slice(0, 2), o = t.slice(2, 4), n = t.slice(4, 6), l = a.slice(0, 2), i = a.slice(2, 4), s = a.slice(4, 6), c = $(r, l, e), d = $(o, i, e), b = $(n, s, e), u = [];
+  return c.forEach(function(g, p) {
+    u.push("" + c[p] + d[p] + b[p]);
   }), u;
 }
-function C(t, a, e) {
+function S(t, a, e) {
   t = t.replace("#", ""), a = a.replace("#", "");
   const r = z(t, a, e), o = 100 / (e + 1), n = [];
   for (let l = 0; l <= e + 1; l++)
@@ -23,30 +23,30 @@ function C(t, a, e) {
     return "#" + l.value;
   });
 }
-function S(t, { minX: a, minY: e, maxX: r, maxY: o, minBarHeight: n }, { max: l, min: i }, c) {
-  const s = t.map((h) => typeof h == "number" ? h : h.value), d = Math.min(...s, i), b = Math.max(...s, l), u = Math.abs(b), g = Math.abs(d), p = (r - a) / (s.length - 1), x = c ? 20 : 0;
+function V(t, { minX: a, minY: e, maxX: r, maxY: o, minBarHeight: n }, { max: l, min: i }, s) {
+  const c = t.map((h) => typeof h == "number" ? h : h.value), d = Math.min(...c, i), b = Math.max(...c, l), u = Math.abs(b), g = Math.abs(d), p = (r - a) / (c.length - 1), x = s ? 20 : 0;
   let f = 0;
   d < 0 && b < 0 ? f = g : d < 0 && b >= 0 ? f = g + u : d >= 0 && b >= 0 && (f = b);
   const m = f !== 0 ? (o - e - x) / f : 1, W = d * m < n ? n : 0, M = d < 0 ? g : 0;
-  return s.map((h, N) => {
-    const D = typeof t[N] == "number" ? t[N] : t[N].title, X = Math.abs(h), w = X * m - W > n ? X * m - W : n;
+  return c.map((h, N) => {
+    const C = typeof t[N] == "number" ? t[N] : t[N].title, X = Math.abs(h), w = X * m - W > n ? X * m - W : n;
     return {
       x: N * p + a,
       y: o - w - (h >= 0 || h === 0 && d >= 0 ? M * m : M * m - w) - x - W,
       height: w,
-      title: D
+      title: C
     };
   });
 }
-function V(t, a, e) {
-  const { maxX: r, maxY: o, labelRotate: n, labelColor: l, labelSize: i } = t.boundary, c = r / (a.length - 1);
-  t.barWidth || (t.barWidth = c - (t.padding || 5)), t.rounding || (t.rounding = 2);
-  let s = 0;
-  t.gradient && t.gradient.length > 1 && (s = C(t.gradient[0], t.gradient[1], a.length - 1));
-  const d = (c - t.barWidth) / 2;
+function B(t, a, e) {
+  const { maxX: r, maxY: o, labelRotate: n, labelColor: l, labelSize: i } = t.boundary, s = r / (a.length - 1);
+  t.barWidth || (t.barWidth = s - (t.padding || 5)), t.rounding || (t.rounding = 2);
+  let c = 0;
+  t.gradient && t.gradient.length > 1 && (c = S(t.gradient[0], t.gradient[1], a.length - 1));
+  const d = (s - t.barWidth) / 2;
   return a.map((u, g) => e("rect", {
     id: `bar-id-${g}`,
-    fill: s ? s[g] : t.gradient[0] ? t.gradient[0] : "#000",
+    fill: c ? c[g] : t.gradient[0] ? t.gradient[0] : "#000",
     x: u.x - d,
     y: u.y,
     width: t.barWidth,
@@ -64,10 +64,10 @@ function V(t, a, e) {
     e("title", {}, [u.title])
   ]));
 }
-function B(t, a, e, r) {
-  const { maxX: o, maxY: n, labelRotate: l, labelSize: i, labelColor: c } = t.labelProps, s = o / (a.length - 1);
-  t.barWidth || (t.barWidth = s - (t.padding || 5)), t.rounding || (t.rounding = 2);
-  const d = (s - t.barWidth) / 2, b = l >= 0 ? 10 : -10;
+function R(t, a, e, r) {
+  const { maxX: o, maxY: n, labelRotate: l, labelSize: i, labelColor: s } = t.labelProps, c = o / (a.length - 1);
+  t.barWidth || (t.barWidth = c - (t.padding || 5)), t.rounding || (t.rounding = 2);
+  const d = (c - t.barWidth) / 2, b = l >= 0 ? 10 : -10;
   return r(
     "g",
     {
@@ -87,7 +87,7 @@ function B(t, a, e, r) {
             "text",
             {
               class: "v-bars--label-text",
-              style: `text-anchor:middle; fill:${c}; font-size:${i}em;`,
+              style: `text-anchor:middle; fill:${s}; font-size:${i}em;`,
               title: f
             },
             [
@@ -99,11 +99,11 @@ function B(t, a, e, r) {
     })
   );
 }
-const R = v({
+const I = v({
   props: ["data", "boundary", "barWidth", "rounding", "id", "gradient", "growDuration", "max", "min", "labelData", "labelProps"],
   render() {
-    const { data: t, boundary: a, max: e, min: r, labelData: o } = this, n = S(t, a, { max: e, min: r }, o.length), l = B(this, n, o, y);
-    let i = V(this, n, y);
+    const { data: t, boundary: a, max: e, min: r, labelData: o } = this, n = V(t, a, { max: e, min: r }, o.length), l = R(this, n, o, y);
+    let i = B(this, n, y);
     return l.children.length && (i = i.concat(l)), y(
       "g",
       {
@@ -195,8 +195,8 @@ const R = v({
       labelRotate: this.labelRotate,
       labelColor: this.labelColor,
       labelSize: this.labelSize
-    }, i = Object.assign({
-      id: "vue-bars-" + this._uid,
+    }, i = D(), s = Object.assign({
+      id: "vue-bars-" + i.uid,
       boundary: n,
       labelProps: l
     }, this.$props);
@@ -205,7 +205,7 @@ const R = v({
       height: a || "25%",
       viewBox: `0 0 ${r} ${o}`
     }, [
-      y(R, i)
+      y(I, s)
     ]);
   }
 });
